@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterModule } from '@angular/router';
 import { Toggle } from '../../services/toggle';
 import { Search } from '../../services/search';
-import { Product } from '../../services/product';
+import { ProductService } from '../../services/ProductService';
 import { Filter } from '../../services/filter';
 
 @Component({
@@ -24,11 +24,11 @@ export class Navigation {
   @Output() filterApplied = new EventEmitter<any[]>();
   products = signal<any[]>([]);
 
-  protected productService = inject(Product);
-  protected filterService = inject(Filter);
-  protected searchService = inject(Search);
-  protected themeService = inject(Toggle);
-  protected renderer = inject(Renderer2);
+  private productService = inject(ProductService);
+  private filterService = inject(Filter);
+  private searchService = inject(Search);
+  private themeService = inject(Toggle);
+  private renderer = inject(Renderer2);
 
   isDarkMode: boolean;
   isMenuOpen: boolean = false;

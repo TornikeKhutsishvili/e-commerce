@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, Input, signal, Signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Product } from '../../services/product';
-import { Products } from '../../models/product-model';
+import { ProductModel } from '../../models/product-model';
 
 @Component({
   selector: 'app-carusel',
@@ -16,7 +15,7 @@ import { Products } from '../../models/product-model';
 })
 export class Carusel {
 
-  @Input() products: Products[] = [];
+  @Input() products: ProductModel[] = [];
   currentIndex = signal(0);
 
   constructor() {}
@@ -31,7 +30,7 @@ export class Carusel {
     );
   }
 
-  currentProduct: Signal<Products | null> = computed(() =>
+  currentProduct: Signal<ProductModel | null> = computed(() =>
     this.products.length > 0 ? this.products[this.currentIndex()] : null
   );
 

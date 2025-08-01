@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Product } from '../../../services/product';
-import { Cart } from '../../../services/cart';
+import { ProductService } from '../../../services/ProductService';
+import { CartService } from '../../../services/CartService';
 
 @Component({
   selector: 'app-product-details',
@@ -19,10 +19,10 @@ export class ProductDetails {
 
   product = signal<any>('');
 
-  protected route = inject(ActivatedRoute);
-  protected productService = inject(Product);
-  protected router = inject(Router);
-  protected cartService = inject(Cart);
+  private route = inject(ActivatedRoute);
+  private productService = inject(ProductService);
+  private router = inject(Router);
+  private cartService = inject(CartService);
 
   constructor() {}
 

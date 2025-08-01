@@ -6,9 +6,9 @@ import { ProductModel } from '../models/product-model';
 @Injectable({
   providedIn: 'root'
 })
-export class Product {
+export class ProductService {
 
-  protected apiUrl = 'https://fakestoreapi.com/products';
+  private apiUrl = 'https://fakestoreapi.com/products';
 
   constructor(private http: HttpClient) {}
 

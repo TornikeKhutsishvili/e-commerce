@@ -6,7 +6,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 })
 export class Toggle {
 
-  protected themeKey = 'theme';
+  private themeKey = 'theme';
 
   constructor(@Inject(PLATFORM_ID) private platformId: any) {
     if (this.isBrowser()) {

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterModule } from '@angular/router';
-import { Cart } from '../../services/cart';
+import { CartService } from '../../services/CartService';
 
 @Component({
   selector: 'app-cart',
@@ -20,7 +20,7 @@ export class Cart {
 
   cartItems: any[] = [];
   totalPrice: number = 0;
-  protected cartService = inject(Cart);
+  private cartService = inject(CartService);
 
   constructor() {}
 

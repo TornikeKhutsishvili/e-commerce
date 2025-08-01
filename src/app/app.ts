@@ -5,7 +5,7 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 import { Navigation } from './components/navigation/navigation';
 import { Search } from './services/search';
 import { Filter } from './services/filter';
-import { Product } from './services/product';
+import { Product } from './services/ProductService';
 
 @Component({
   selector: 'app-root',

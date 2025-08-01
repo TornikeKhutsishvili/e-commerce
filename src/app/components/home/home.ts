@@ -2,13 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { Product } from '../../services/product';
+import { ProductService } from '../../services/ProductService';
 import { Filter } from '../../services/filter';
-import { Cart } from '../../services/cart';
 import { Search } from '../../services/search';
 import { RouterLink } from '@angular/router';
 import { Carusel } from '../carusel/carusel';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ProductModel } from '../../models/product-model';
+import { CartService } from '../../services/CartService';
 
 @Component({
   selector: 'app-home',
@@ -27,16 +28,16 @@ export class Home {
 
   filteredProducts = signal<any[]>([]);
   products = signal<any[]>([]);
-  protected filterSubscription: Subscription | null = null; // check error
-  protected productService = inject(Product);
-  protected filterService = inject(Filter);
-  protected cartService = inject(Cart);
-  protected searchService = inject(Search);
+  private filterSubscription: Subscription | null = null; // check error
+  private productService = inject(ProductService);
+  private filterService = inject(Filter);
+  private cartService = inject(CartService);
+  private searchService = inject(Search);
 
   cartItemCount = signal<number>(0);
   page = signal<number>(1);
   itemsPerPage = signal<number>(6);
-  caruselProducts = signal<Product[]>([]);
+  caruselProducts = signal<ProductModel[]>([]);
 
   constructor() {}
 
