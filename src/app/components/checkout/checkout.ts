@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, Signal, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../services/CartService';
 import { RouterLink, RouterModule } from '@angular/router';
@@ -18,30 +18,35 @@ import { RouterLink, RouterModule } from '@angular/router';
 })
 export class Checkout {
 
-  paymentMethod: string = 'Cash on Delivery';
-  cartItems: any[] = [];
-  totalPrice: number = 0;
+  paymentMethod = signal<string>('Cash on Delivery');
+  cartItems = signal<any[]>([]);
+  totalPrice = signal<number>(0);
 
   private cartService = inject(CartService);
 
-  user: { name: string, email: string, address: string, paymentMethod: string } = {
-    name: '',
-    email: '',
-    address: '',
-    paymentMethod: 'Credit Card'
+  user: {
+    name: Signal<string>;
+    email: Signal<string>;
+    address: Signal<string>;
+    paymentMethod: Signal<string>;
+  } = {
+    name: signal(''),
+    email: signal(''),
+    address: signal(''),
+    paymentMethod: signal('Credit Card')
   };
 
 
   // Form fields
-  cardNumber: string = '';
-  expiryDate: string = '';
-  cvv: string = '';
-  paypalEmail: string = '';
+  cardNumber = signal<string>('');
+  expiryDate = signal<string>('');
+  cvv = signal<string>('');
+  paypalEmail = signal<string>('');
 
   constructor() {}
 
   ngOnInit(): void {
-    this.cartItems = this.cartService.getCartItems() || [];
+    this.cartItems.set(this.cartService.getCartItems() || []);
     // console.log(this.cartItems);
     this.calculateTotalPrice();
 
@@ -64,7 +69,7 @@ export class Checkout {
   }
 
   calculateTotalPrice(): void {
-    this.totalPrice = this.cartItems.reduce((acc, item) => {
+    this.totalPrice = this.cartItems().reduce((acc, item) => {
       return acc + (item?.price * item?.quantity || 0);
     }, 0);
   }
@@ -84,7 +89,7 @@ export class Checkout {
   // Format the card number as the user types
   formatCardNumber(): void {
     // Remove all non-digit characters
-    let formattedCardNumber = this.cardNumber.replace(/\D/g, '');
+    let formattedCardNumber = this.cardNumber().replace(/\D/g, '');
 
     // Split the digits into groups of 4 and join with '-'
     if (formattedCardNumber.length > 4) {
@@ -92,7 +97,7 @@ export class Checkout {
     }
 
     // Update the cardNumber with formatted value
-    this.cardNumber = formattedCardNumber;
+    this.cardNumber.set(formattedCardNumber);
   }
 
 }

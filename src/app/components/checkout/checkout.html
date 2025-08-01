@@ -3,7 +3,7 @@
 
   <div *ngIf="cartItems.length > 0; else emptyCart">
     <div class="row">
-      <div class="col-md-4 mb-3" *ngFor="let item of cartItems">
+      <div class="col-md-4 mb-3" *ngFor="let item of cartItems()">
         <div class="card">
           <img [src]="item.image" class="card-img-top" alt="{{ item.title }}">
           <div class="card-body">
@@ -69,12 +69,12 @@
         </select>
 
         <!-- Cash on Delivery Option (no additional fields) -->
-        <div *ngIf="paymentMethod === 'Cash_on_Delivery'" class="payment-option">
+        <div *ngIf="paymentMethod() === 'Cash_on_Delivery'" class="payment-option">
           <p>You have selected Cash on Delivery. No additional information required.</p>
         </div>
 
         <!-- Credit Card Payment Fields -->
-        <div *ngIf="paymentMethod === 'Credit_Card'" class="mb-3">
+        <div *ngIf="paymentMethod() === 'Credit_Card'" class="mb-3">
           <div class="mb-3">
             <label for="cardNumber" class="form-label mt-3">Card Number</label>
             <input type="text" id="cardNumber" name="cardNumber"
@@ -110,7 +110,7 @@
         </div>
 
         <!-- PayPal Payment Fields -->
-        <div *ngIf="paymentMethod === 'PayPal'">
+        <div *ngIf="paymentMethod() === 'PayPal'">
             <div class="mb-3">
             <label for="paypalEmail" class="form-label mt-3">PayPal Email</label>
             <input type="email" id="paypalEmail" name="paypalEmail"
@@ -131,7 +131,7 @@
 
 
     <div class="text-center mt-4 back-cart">
-      <h4>Total: ${{ totalPrice }}</h4>
+      <h4>Total: ${{ totalPrice() }}</h4>
       <a [routerLink]="['/cart']" class="btn btn-secondary">Back to cart</a>
       <button type="button" class="btn btn-primary"
               [disabled]="paypalForm.invalid"

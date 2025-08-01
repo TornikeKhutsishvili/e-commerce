@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Output, Renderer2, signal } from '@angular/core';
+import { Component, EventEmitter, inject, Output, Renderer2, Signal, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterModule } from '@angular/router';
 import { Toggle } from '../../services/toggle';
@@ -30,8 +30,8 @@ export class Navigation {
   private themeService = inject(Toggle);
   private renderer = inject(Renderer2);
 
-  isDarkMode: boolean;
-  isMenuOpen: boolean = false;
+  isDarkMode = signal<boolean>(false);
+  isMenuOpen = signal<boolean>(false);
 
   isblack = signal<string>('');
   islight = signal<string>('');
@@ -41,7 +41,7 @@ export class Navigation {
 
   constructor(
   ) {
-    this.isDarkMode = this.themeService.getSavedTheme() === 'dark';
+    this.isDarkMode.set(this.themeService.getSavedTheme() === 'dark');
 
     this.isblack.set('#343a40');
     this.islight.set('#f8f9fa');
@@ -57,7 +57,7 @@ export class Navigation {
 
   toggleTheme(): void {
     this.themeService.toggleTheme();
-    this.isDarkMode = this.themeService.getSavedTheme() === 'dark';
+    this.isDarkMode.set(this.themeService.getSavedTheme() === 'dark');
     this.updateNavbarTheme();
   }
 
@@ -67,7 +67,7 @@ export class Navigation {
       this.renderer.removeClass(navbar, 'navbar-light');
       this.renderer.removeClass(navbar, 'navbar-dark');
 
-      if (this.isDarkMode) {
+      if (this.isDarkMode()) {
         this.renderer.addClass(navbar, 'navbar-dark');
       } else {
         this.renderer.addClass(navbar, 'navbar-light');
@@ -77,7 +77,7 @@ export class Navigation {
 
   // menu open-close
   toggleMenu(): void {
-    this.isMenuOpen = !this.isMenuOpen;
+    this.isMenuOpen.set(!this.isMenuOpen);
   }
 
   // search

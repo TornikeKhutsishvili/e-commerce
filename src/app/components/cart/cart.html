@@ -3,7 +3,7 @@
 
   <div *ngIf="cartItems.length > 0; else emptyCart">
     <div class="row">
-      <div class="col-md-4 mb-3" *ngFor="let item of cartItems">
+      <div class="col-md-4 mb-3" *ngFor="let item of cartItems()">
         <div class="card">
           <img [src]="item.image" class="card-img-top" alt="{{ item.title }}">
           <div class="card-body">
@@ -28,7 +28,7 @@
 
     <!-- Total Calculation -->
     <div class="text-center mt-4">
-      <h4>Total: ${{ totalPrice }}</h4>
+      <h4>Total: ${{ totalPrice() }}</h4>
 
       <!-- Proceed to Checkout Button -->
       <a [routerLink]="['/checkout']" class="btn btn-success mt-4">Proceed to Checkout</a>

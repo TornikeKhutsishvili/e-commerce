@@ -1,5 +1,5 @@
 <!-- navbar -->
-<nav class="navbar navbar-expand-lg" [ngClass]="isDarkMode ? 'navbar-dark' : 'navbar-light'">
+<nav class="navbar navbar-expand-lg" [ngClass]="isDarkMode() ? 'navbar-dark' : 'navbar-light'">
   <div class="container-fluid">
     <a [routerLink]="['/']" class="navbar-brand">E-commerce</a>
 
@@ -24,8 +24,8 @@
         <li class="nav-item ms-3">
           <button type="button" class="btn btn-outline-light"
             (click)="toggleTheme()"
-            [style.backgroundColor]="isDarkMode ? islight : isblack">
-            <span [ngClass]="{'rotate-on-hover': true}">{{ isDarkMode ? sun : moon }}</span>
+            [style.backgroundColor]="isDarkMode() ? islight : isblack">
+            <span [ngClass]="{'rotate-on-hover': true}">{{ isDarkMode() ? sun : moon }}</span>
           </button>
         </li>
       </ul>

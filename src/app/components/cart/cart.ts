@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterModule } from '@angular/router';
 import { CartService } from '../../services/CartService';
@@ -18,14 +18,14 @@ import { CartService } from '../../services/CartService';
 })
 export class Cart {
 
-  cartItems: any[] = [];
-  totalPrice: number = 0;
+  cartItems = signal<any[]>([]);
+  totalPrice = signal<number>(0);
   private cartService = inject(CartService);
 
   constructor() {}
 
   ngOnInit(): void {
-    this.cartItems = this.cartService.getCartItems();  // Restore cart data from LocalStorage
+    this.cartItems.set(this.cartService.getCartItems());  // Restore cart data from LocalStorage
     this.calculateTotalPrice();
   }
 
@@ -33,7 +33,7 @@ export class Cart {
   updateQuantity(productId: number, quantity: number): void {
     if (quantity >= 1) { // At least 1 product
       this.cartService.updateQuantity(productId, quantity);  // Update in LocalStorage
-      this.cartItems = this.cartService.getCartItems();  // Update cart
+      this.cartItems.set(this.cartService.getCartItems());  // Update cart
       this.calculateTotalPrice();  // Update total amount
     }
   }
@@ -41,13 +41,13 @@ export class Cart {
   // Remove product from cart
   removeFromCart(productId: number): void {
     this.cartService.removeFromCart(productId);  // Delete from LocalStorage
-    this.cartItems = this.cartService.getCartItems();  // Update cart
+    this.cartItems.set(this.cartService.getCartItems());  // Update cart
     this.calculateTotalPrice();  // Update total amount
   }
 
   // Calculate the total price of products in the cart
   calculateTotalPrice(): void {
-    this.totalPrice = this.cartItems.reduce((acc, item) => {
+    this.totalPrice = this.cartItems().reduce((acc, item) => {
       return acc + (item?.price * item?.quantity || 0);
     }, 0);
   }
