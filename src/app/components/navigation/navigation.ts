@@ -40,11 +40,6 @@ export class Navigation {
   moon = '🌙';
 
   constructor(
-    // private productService: Product,
-    // private filterService: Filter,
-    // private searchService: Search,
-    // private themeService: Toggle,
-    // private renderer: Renderer2,
   ) {
     this.isDarkMode = this.themeService.getSavedTheme() === 'dark';
 
